@@ -2,6 +2,7 @@
 ## GNS3 na Ubuntu Server 22.0.4 jako cyber-range dla zespolow RED-GREEN-BLUE
 * wygodniejszy dostęp otrzymasz z uruchomionym serwerem SSH
 * zrób update i upgrade swojej dystrybucji 
+
 `$ sudo apt get update`
 
 `$ sudo apt get upgrade`
