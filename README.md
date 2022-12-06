@@ -2,11 +2,10 @@
 ## GNS3 na Ubuntu Server 22.0.4 jako cyber-range dla zespolow RED-GREEN-BLUE
 * wygodniejszy dostęp otrzymasz z uruchomionym serwerem SSH
 * zrób update i upgrade swojej dystrybucji 
-
-`$ sudo apt get update`
-
-`$ sudo apt get upgrade`
-
+```
+$ sudo apt get update
+$ sudo apt get upgrade
+```
 ### Instalacja serwera GNS3 z webGUI
 * dodanie repozytorium GNS3
 ** po wyświetleniu informacji, czy użytkownicy inni niż root powinni mieć możliwość korzystania z wireshark i ubridge, wybierz „Tak” w obu przypadkach), wybór "Nie" będzie skutkować brakiem możliwości dodania do systemowych grup GNS'a. 
