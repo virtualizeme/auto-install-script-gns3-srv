@@ -1,6 +1,6 @@
 # GNS3 - jako środowisko laboratoryjne (nie tylko do sieci)
 ## GNS3 na Ubuntu Server 22.0.4 jako cyber-range dla zespolow RED-GREEN-BLUE
-* wygodniejszy dostęp otrzymasz z uruchomionym serwerem SSH
+* wygodniejszy dostęp otrzymasz z uruchomionym serwerem SSH (można go włączyć i uruchomić podczas instalacji Ubuntu Server)
 * zrób update i upgrade swojej dystrybucji 
 ```
 $ sudo apt get update
