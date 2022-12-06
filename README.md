@@ -72,6 +72,22 @@ $ sudo usermod -aG docker [nazwa_uzytkownika]
 ```
 * sprawdzenie statusów uruchomionych serwisów GNS3 oraz Docker
 ```
-sudo systemctl status docker
-sudo systemctl status 
+$ sudo systemctl status docker
+```
+Output:
+```
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2022-12-06 11:15:38 UTC; 22s ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 8816 (dockerd)
+      Tasks: 18
+     Memory: 23.2M
+        CPU: 375ms
+     CGroup: /system.slice/docker.service
+             └─8816 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock ```
+
+```
+$ systemctl status gns3server.service
 ```
