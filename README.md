@@ -1,4 +1,4 @@
-# GNS3 - jako środowisko laboratoryjne
+# GNS3 - jako środowisko laboratoryjne (nie tylko do sieci)
 ## GNS3 na Ubuntu Server 22.0.4 jako cyber-range dla zespolow RED-GREEN-BLUE
 * wygodniejszy dostęp otrzymasz z uruchomionym serwerem SSH
 * zrób update i upgrade swojej dystrybucji 
@@ -117,4 +117,15 @@ gru 06 11:23:25 server gns3server[9127]: 2022-12-06 11:23:25 INFO web_server.py:
 ```
 sudo systemctl enable gns3server.service
 sudo systemctl enable docker
+```
+## Minimal Desktop enviroment, virtual machine manager dla QEMU/KVM, optymalizacja dysków `*.qcow2` dla maszyn QEMU.
+* minimalne środowisko graficzne oparte o Gnome
+```
+$ sudo apt install gnome-sessions gdm3
+$ sudo apt install gnome-terminal
+$ sudo apt install nautilus
+```
+* do wygodniejszego tworzenia maszyn dla `QEMU` którę posłużą dla GNS3 jako `templates`
+```
+$ sudo apt install virt-manager
 ```
