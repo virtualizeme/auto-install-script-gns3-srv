@@ -86,8 +86,35 @@ TriggeredBy: ● docker.socket
      Memory: 23.2M
         CPU: 375ms
      CGroup: /system.slice/docker.service
-             └─8816 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock ```
-
+             └─8816 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
 ```
-$ systemctl status gns3server.service
+* po instalacji GNS serwer będzie nieaktywny
+```
+$ sudo systemctl status gns3server.service
+○ gns3server.service - GNS3 server
+     Loaded: loaded (/lib/systemd/system/gns3server.service; disabled; vendor preset: enabled)
+     Active: inactive (dead)
+```
+
+* uruchamiamy serwis oraz dodajemy serwis GNS i Docker do autostartu systemu (GNS weGUI uruchomi się na porcie 3080 co widać w statusie uruchomionej usługi)
+```
+$ sudo systemctl start gns3server.service
+● gns3server.service - GNS3 server
+     Loaded: loaded (/lib/systemd/system/gns3server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Tue 2022-12-06 11:23:24 UTC; 5s ago
+   Main PID: 9127 (gns3server)
+      Tasks: 1 (limit: 77039)
+     Memory: 37.5M
+        CPU: 657ms
+     CGroup: /system.slice/gns3server.service
+             └─9127 /usr/share/gns3/gns3-server/bin/python /usr/bin/gns3server
+
+gru 06 11:23:24 server gns3server[9127]: 2022-12-06 11:23:24 INFO run.py:243 Running with Python 3.10.6 and has PID 9127
+gru 06 11:23:24 server gns3server[9127]: 2022-12-06 11:23:24 INFO run.py:79 Current locale is pl_PL.UTF-8
+gru 06 11:23:25 server gns3server[9127]: 2022-12-06 11:23:25 INFO web_server.py:318 Starting server on 0.0.0.0:3080
+```
+* dodajemy Docker oraz GNS3 do uruchamiania wraz ze startem systemu
+```
+sudo systemctl enable gns3server.service
+sudo systemctl enable docker
 ```
