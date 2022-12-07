@@ -1,0 +1,4 @@
+# Troubleshooting
+* W tym pliku zamieszczam napotkane problemy w czasie deploymentu maszyn, obrazów dysków `*.qcow2`, ustawień sieciowych w KVM czy maszyn wirtualnych z przeznaczeniem do budowania cyber-range.
+1. Security Onion - napotkany problem dotyczy, zmiany nazwy interfejsów sieciowych z `eth[xx]` na `ens[xx]`. W normalnie bootującym się systemie linuxy niebyłby to problem, jednak tworząc `template` kreator instalacji Security Onion zapisuje w plikach odpowiadających za konfigurację sieciową sensoru dokładne nazwy interfejsów sieciowych które widnieją podczas instalacji, natomiast `KVM` w GNS3 po zrobieniu `clone` do projektu przypisuje karty sieciowe `e1000` co w wyniku po uruchomieniu SOnion w projekcie gubi statyczna adresacje podana w kreatorze instalacji i pobiera DHCP na nowo wykryty interfejs.
+Rozwiązaniem problemu jest dodanie linii 
