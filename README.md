@@ -130,7 +130,7 @@ $ sudo apt install nautilus
 $ sudo apt install task-xfce-desktop
 ```
 Podczas instalacji wybieramy `display manager` wybieramy lżejsza wersje - `lightdm`
-Jeżeli paczka nie posiadałaby w sobie dodatkowych elementów typu `terminal` `files` itp. można je pobrac dzięki `apt` analogicznie jak do GNOME.
+* Jeżeli paczka nie posiadałaby w sobie dodatkowych elementów typu `terminal` `files` itp. można je pobrac dzięki `apt` analogicznie jak do GNOME.
 * do wygodniejszego tworzenia maszyn dla `QEMU` którę posłużą dla GNS3 jako `templates`
 ```
 $ sudo apt install virt-manager
