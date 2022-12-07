@@ -118,10 +118,10 @@ gru 06 11:23:25 server gns3server[9127]: 2022-12-06 11:23:25 INFO web_server.py:
 sudo systemctl enable gns3server.service
 sudo systemctl enable docker
 ```
-## Minimal Desktop enviroment, virtual machine manager dla QEMU/KVM, optymalizacja dysków `*.qcow2` dla maszyn QEMU. GNOME lub XFCE
+## Minimal Desktop enviroment (gnome-session), virtual machine manager dla QEMU/KVM.
 * minimalne środowisko graficzne oparte o Gnome (przy mocniejszych parametrach serwera)
 ```
-$ sudo apt install gnome-sessions gdm3
+$ sudo apt install gnome-session gdm3
 $ sudo apt install gnome-terminal
 $ sudo apt install nautilus
 ```
@@ -129,7 +129,8 @@ $ sudo apt install nautilus
 ```
 $ sudo apt install task-xfce-desktop
 ```
-Jeżeli paczka nie posiadała by w sobie dodatkowych elementów typu `terminal` `files` itp. można je pobrac dzięki `apt` analogicznie jak do GNOME.
+Podczas instalacji wybieramy `display manager` wybieramy lżejsza wersje - `lightdm`
+Jeżeli paczka nie posiadałaby w sobie dodatkowych elementów typu `terminal` `files` itp. można je pobrac dzięki `apt` analogicznie jak do GNOME.
 * do wygodniejszego tworzenia maszyn dla `QEMU` którę posłużą dla GNS3 jako `templates`
 ```
 $ sudo apt install virt-manager
