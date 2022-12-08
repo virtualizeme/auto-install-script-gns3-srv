@@ -3,6 +3,7 @@
 
 clear
 echo "Update oraz Upgrade Ubuntu"
+sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
 sleep 2
 
 apt update -y
