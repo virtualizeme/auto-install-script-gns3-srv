@@ -78,4 +78,5 @@ echo "Docker-CE: $(sudo systemctl status docker | grep Active:)"
 echo "#######################################"
 echo "GNS3 web portal: http://$(hostname  -I | cut -f1 -d' '):3080"
 echo "#######################################"
-read -p "Instalacja zakonczona, wcisniej ENTER.."
+read -p "Instalacja zakonczona, wcisniej ENTER..nastapi REBOOT systemu"
+shutdown -r now
