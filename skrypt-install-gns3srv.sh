@@ -8,7 +8,7 @@ sleep 2
 
 apt update -y
 sleep 1
-apt upgrade -y 
+apt full-upgrade -y --auto-remove
 sleep 1
 
 clear
@@ -75,5 +75,6 @@ echo "#######################################"
 echo "GNS3: $(sudo systemctl status gns3server.service | grep Active:)"
 echo "Docker-CE: $(sudo systemctl status docker | grep Active:)"
 echo "#######################################"
-
+echo "GNS3 web portal: http://$(hostname -I):3080"
+echo "#######################################"
 read -p "Instalacja zakonczona, wcisniej ENTER.."
