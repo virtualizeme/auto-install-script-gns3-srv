@@ -47,7 +47,7 @@ apt install docker-ce -y
 
 
 clear
-echo "Dodanie biezacego uzytkownika do grup  ubridge,libvirt,kvm,wireshark,docker"
+echo "Dodanie biezacego uzytkownika do grup  ubridge,libvirt,kvm,wireshark,docker i nadanie uprawnien"
 sleep 2
 
 USER="$(whoami)"
@@ -56,7 +56,7 @@ usermod -aG libvirt $USER
 usermod -aG kvm $USER
 usermod -aG wireshark $USER
 usermod -aG docker $USER
-sleep4
+sleep 3
 
 clear
 echo "Uruchomienie serwisow GNS3 i Docker oraz dodanie do uruchamiania z startem systemu"
