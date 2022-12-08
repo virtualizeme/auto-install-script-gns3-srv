@@ -20,7 +20,7 @@ add-apt-repository ppa:gns3/ppa -y
 sleep 1
 apt update -y
 sleep 1
-apt install gns3-gui gns3-server -y
+DEBIAN_FRONTEND=noninteractive apt -y install gns3-gui gns3-server
 sleep 1
 
 clear
