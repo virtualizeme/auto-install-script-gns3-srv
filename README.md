@@ -14,7 +14,7 @@ Można również doinstalować przez CLI VirtualBox lub vMware Player lub Workst
 ```
 $ sudo add-apt-repository ppa:gns3/ppa
 $ sudo apt update                                
-$ sudo apt install gns3-gui gns3-server
+$ sudo apt install gns3-server
 ```
 * instalacja wsparcia do obsługi obrazów urządzeń sieciowych Cisco na IOU (architektura i386)
 ```
