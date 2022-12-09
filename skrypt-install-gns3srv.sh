@@ -23,7 +23,8 @@ sleep 1
 apt update -y
 sleep 1
 # wlaczenie trybu bez interakcji uzytkownika, co nie pozwoli uzytkownikom non-root do wykonania capture packet oraz dodania do grupy wireshark
-DEBIAN_FRONTEND=noninteractive apt -y install gns3-gui gns3-server
+#DEBIAN_FRONTEND=noninteractive apt -y install gns3-gui gns3-server ==> chwilowo usuniete do instalacji testing 
+DEBIAN_FRONTEND=noninteractive apt -y install gns3-server
 sleep 1
 
 clear
