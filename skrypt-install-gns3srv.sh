@@ -3,6 +3,8 @@
 
 clear
 echo "Update oraz Upgrade Ubuntu"
+
+# dwie ponizsze linie wylaczaja pytanie o restart serwisow przy kazdorazowym apt update i apt install z uwagi na fuul-upgrade nie sa potrzebne
 sed -i "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
 sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
 sleep 2
@@ -20,6 +22,7 @@ add-apt-repository ppa:gns3/ppa -y
 sleep 1
 apt update -y
 sleep 1
+# wlaczenie trybu bez interakcji uzytkownika, co nie pozwoli uzytkownikom non-root do wykonania capture packet oraz dodania do grupy wireshark
 DEBIAN_FRONTEND=noninteractive apt -y install gns3-gui gns3-server
 sleep 1
 
@@ -54,7 +57,7 @@ USER="$(whoami)"
 usermod -aG ubridge $USER
 usermod -aG libvirt $USER
 usermod -aG kvm $USER
-usermod -aG wireshark $USER
+# usermod -aG wireshark $USER ==> wpis nie aktywny z uwagi na tryb NOINTERACTIVE instalacji gns3server
 usermod -aG docker $USER
 sleep 3
 
