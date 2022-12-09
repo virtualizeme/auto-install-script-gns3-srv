@@ -62,12 +62,12 @@ Instalacja docker engine
 ```
 $ sudo apt install docker-ce
 ```
-* dodanie naszego użytkownika do grup usług dla serwisu GNS tj. `ubridge libvirt kvm wireshark docker`
+* dodanie naszego użytkownika do grup usług dla serwisu GNS tj. `ubridge libvirt kvm docker`
 ```
 $ sudo usermod -aG ubridge [nazwa_uzytkownika]
 $ sudo usermod -aG libvirt [nazwa_uzytkownika]
 $ sudo usermod -aG kvm [nazwa_uzytkownika]
-$ sudo usermod -aG wireshark [nazwa_uzytkownika]
+# $ sudo usermod -aG wireshark [nazwa_uzytkownika]. ==> opcjonalnie przy instalacji z paczka gns3-gui
 $ sudo usermod -aG docker [nazwa_uzytkownika]
 ```
 * sprawdzenie statusów uruchomionych serwisów GNS3 oraz Docker
