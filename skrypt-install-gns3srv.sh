@@ -90,6 +90,12 @@ EOFI
 chown root:root /etc/init/gns3.conf
 chmod 644 /etc/init/gns3.conf
 
+sudo systemctl stop gns3server.service
+sleep 1 
+sudo systemctl start gns3server.service
+sleep 2
+
+
 # instalacja serwisu systemd
 
 cat <<EOFI > /lib/systemd/system/gns3.service
@@ -115,6 +121,9 @@ WantedBy=multi-user.target
 EOFI
 chmod 755 /lib/systemd/system/gns3.service
 chown root:root /lib/systemd/system/gns3.service
+
+sudo systemctl enable gns3server.service
+sudo systemctl start gns3server.service
 
 
 # pobranie skryptu do utowrzenia licencji dla IOU, zmiana nazwy pliku i przeniesienie go do konfiguracji gns3
@@ -150,9 +159,9 @@ sleep 3
 
 clear
 echo "Uruchomienie serwisow GNS3 i Docker oraz dodanie do uruchamiania z startem systemu"
-sudo systemctl start gns3server.service
+sudo systemctl restart gns3server.service
 sleep 2
-sudo systemctl start docker
+sudo systemctl restart docker
 sleep 2
 sudo systemctl enable docker
 sleep 2
