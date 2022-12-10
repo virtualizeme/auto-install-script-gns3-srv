@@ -126,17 +126,17 @@ $ sudo apt install gnome-session gdm3
 $ sudo apt install gnome-terminal
 $ sudo apt install nautilus
 ```
-* minimalne środowisko graficzne oparte o Gnome (przy mocniejszych parametrach serwera)
+* minimalne środowisko graficzne oparte o Xfce (przy slabszych parametrach serwera)
 ```
 $ sudo apt install task-xfce-desktop
 ```
-Podczas instalacji wybieramy `display manager` wybieramy lżejsza wersje - `lightdm`
+Podczas instalacji wybieramy `display manager` a tam  lżejsza wersje - `lightdm`
 * Jeżeli paczka nie posiadałaby w sobie dodatkowych elementów typu `terminal` `files` itp. można je pobrac dzięki `apt` analogicznie jak do GNOME.
-* do wygodniejszego tworzenia maszyn dla `QEMU` którę posłużą dla GNS3 jako `templates`
+* do wygodniejszego tworzenia maszyn dla `QEMU` którę posłużą dla GNS3 jako `templates` można wykorzystac Virtual Machine Manager od RedHat
 ```
 $ sudo apt install virt-manager
 ```
 
 ## Support
 
-Potrzebujesz pomocy - wsparcia w tej tematyce, email virtualizeme.polska@. Z czasem dojdzie `Discord` lub `Slack` :)
+Potrzebujesz pomocy - wsparcia w tej tematyce, email virtualize.me.polska@.gmail.com Z czasem dojdzie `Discord` lub `Slack` :)
