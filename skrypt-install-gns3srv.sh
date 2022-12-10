@@ -42,8 +42,8 @@ sleep 1
 
 #################### ta czesc odpowiada za konfiguracje serwera i uzytkownika gns3 #########################
 
-# wpisanie do zmiennej uzytkownika instalujacego serwer
-USER="$(whoami)"
+clear
+echo "Konfiguracja serwera i uzytkownika gns3"
 
 # utworzenie uzytkownika gns3 i przypisanie mu folderu domowego 
 useradd -d /opt/gns3/ -m gns3
@@ -64,7 +64,6 @@ enable_hardware_acceleration = True
 require_hardware_acceleration = True
 EOFC
 
-chown -R $USER:gns3 /etc/gns3 
 chown -R gns3:gns3 /etc/gns3
 chmod -R 700 /etc/gns3
 
@@ -95,7 +94,6 @@ sleep 1
 sudo systemctl start gns3server.service
 sleep 2
 
-
 # instalacja serwisu systemd
 
 cat <<EOFI > /lib/systemd/system/gns3.service
@@ -119,13 +117,16 @@ LimitNOFILE=16384
 [Install]
 WantedBy=multi-user.target
 EOFI
+
+
 chmod 755 /lib/systemd/system/gns3.service
 chown root:root /lib/systemd/system/gns3.service
 
 sudo systemctl enable gns3server.service
 sudo systemctl start gns3server.service
 
-
+clear
+echo "Instalacja licencji IOU"
 # pobranie skryptu do utowrzenia licencji dla IOU, zmiana nazwy pliku i przeniesienie go do konfiguracji gns3
 wget http://www.ipvanquish.com/download/CiscoIOUKeygen3f.py
 python3 ./CiscoIOUKeygen3f.py
