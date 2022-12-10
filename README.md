@@ -21,7 +21,7 @@
 * możliwość deploymentu każdego systemu uperacyjnego na `hypervisor type 1 KVM` oraz `QEMU` który jest wykorzystywany przez GNS3 Server
 * możliwość deploymentu urządzeń sieciowych dzięki wbudowanenmu wsparciu dla `Dynamips'
 * możliwość deploymentu urządzeń sieciowych dzięki dodatkowych modułom wspierającym zwirtualizowanie architektury i386 - w tym przypadku dla IOU
-* "odseparowanie" ćwiczących od prawdziwej sieci firmy organizującej ćwiczenie, poprzez wystawienie VNC, telnet, ssh lub http/https maszyn wirtualnych projektu na jeden adres zewnetrzny serwera GNS3 Server oraz konkretne porty dla kluczowych wariantów usług (np. Security Onion Kibana webUI lub Palo Alto FW)
+* "odseparowanie" ćwiczących od prawdziwej sieci firmy organizującej ćwiczenie, poprzez wystawienie szyfrowanego VNC, ssh lub https maszyn wirtualnych projektu na jeden adres zewnetrzny serwera GNS3 Server oraz konkretne porty dla kluczowych wariantów usług (np. Security Onion Kibana webUI lub Palo Alto FW webUI itp.)
 #### Testing: 
   - automatyczne licencjonowanie IOU w skrypcie instalacyjnym
   - automatyczne pobieranie plików `QCOW2` z zewnetrzengo zasoby (serwer www http) oraz tworzenie templatki wykorztyjac `GNS3server API` w skrypcie instalacyjnym.
