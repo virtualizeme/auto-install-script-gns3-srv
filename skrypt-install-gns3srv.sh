@@ -204,6 +204,7 @@ sleep 2
 sudo systemctl enable gns3server.service
 sleep 2
 
+clear
 
 clear
 echo "Status serwisow GN3 i Docker"
@@ -213,5 +214,7 @@ echo "Docker-CE: $(sudo systemctl status docker | grep Active:)"
 echo "#######################################"
 echo "GNS3 web portal: http://$(hostname  -I | cut -f1 -d' '):3080"
 echo "#######################################"
+echo "Utworz haslo dla uzytkownika gns3:"
+passwd gns3
 read -p "Instalacja zakonczona, wcisniej ENTER..nastapi REBOOT systemu"
 shutdown -r now
