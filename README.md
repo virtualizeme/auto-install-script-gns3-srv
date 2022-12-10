@@ -8,3 +8,6 @@
 * [Rozszerzenie wolumenu LVM](https://github.com/virtualizeme/gns3-as-a-cyber-range/blob/6abea34ef8006c04d572558c0407b9732db6b5a2/rozszerzenie-wolumenu-LVM.md)
 * [Security Onion - zmiana nazw interfejsów podczas startowania GRUB](https://github.com/virtualizeme/gns3-as-a-cyber-range/blob/6abea34ef8006c04d572558c0407b9732db6b5a2/SOnion-interface-problem.md)
 * [Wystawienie serwisów WWW wirtualnych maszyn z projektu - IPtables i UFW](https://github.com/virtualizeme/gns3-as-a-cyber-range/blob/6abea34ef8006c04d572558c0407b9732db6b5a2/iptables-ufw-ext-services.md)
+
+## Support
+Potrzebujesz pomocy - wsparcia w tej tematyce, email virtualize.me.polska@.gmail.com Z czasem dojdzie `Discord` lub `Slack` :)
