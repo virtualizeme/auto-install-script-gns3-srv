@@ -30,13 +30,22 @@ sleep 1
 clear
 echo "Dodanie wsparcia architektury i386 dla IOU"
 sleep 2
-
+# zmiana hostname serwera ktora zostanie przypisana do licencji IOU
+hostnamectl set-hostname gns3server
+sleep 1
 dpkg --add-architecture i386
 sleep 1
 apt update -y
 sleep 1
 apt install gns3-iou -y
 sleep 1
+# pobranie skryptu do utowrzenia licencji dla IOU, zmiana nazwy pliku i przeniesienie go do konfiguracji gns3
+wget http://www.ipvanquish.com/download/CiscoIOUKeygen3f.py
+python3 ./CiscoIOUKeygen3f.py
+mv iourc.txt /opt/gns3/.iourc
+chmod +x /opt/gns3/images/IOU/*.*
+
+
 
 clear
 echo "Instalacja Docker-CE"
