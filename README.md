@@ -135,3 +135,7 @@ Podczas instalacji wybieramy `display manager` wybieramy lżejsza wersje - `ligh
 ```
 $ sudo apt install virt-manager
 ```
+
+## Support
+
+Potrzebujesz pomocy - wsparcia w tej tematyce, email virtualizeme.polska@. Z czasem dojdzie `Discord` lub `Slack` :)
