@@ -21,7 +21,7 @@
   - automatyczne pobieranie plików `QCOW2` z zewnetrzengo zasoby (serwer www http) oraz tworzenie templatki wykorztyjac `GNS3server API` w skrypcie instalacyjnym.
 #### Roadmap:
   - end of 2022 - automatyczne tworzenie calych projektow razem z polaczeniami, wezlami w oparciu o scenariusze cwiczacych i wczesniej zaimportowane qcow2 i stworzone template z instalacji, oraz pierwszy stress test srodowiska przy maksymalnie trzech uruchomionych projektach kazdy po max 15 maszyn.
-  - January 2023 - aktualizacja templatek, 
+  - January 2023 - aktualizacja templatek, kolejny stress test srodowiska do 80-90% utylizacji zasobów, zależnie od parametrów serwera
 
 ## Spis treści
 
