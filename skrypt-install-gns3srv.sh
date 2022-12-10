@@ -123,15 +123,50 @@ chmod 755 /lib/systemd/system/gns3.service
 chown root:root /lib/systemd/system/gns3.service
 
 sudo systemctl enable gns3server.service
+
 sudo systemctl start gns3server.service
+sleep 2
+
+clear
+echo "Tworzenie pliku CiscoIOUKeygen.py"
+cat <<EOFC > CiscoIOUKeygen.py
+#! /usr/bin/python3
+print("*********************************************************************")
+print("Cisco IOU License Generator - Kal 2011, python port of 2006 C version")
+import os
+import socket
+import hashlib
+import struct
+# get the host id and host name to calculate the hostkey
+hostid=os.popen("hostid").read().strip()
+hostname = socket.gethostname()
+ioukey=int(hostid,16)
+for x in hostname:
+ ioukey = ioukey + ord(x)
+print("hostid=" + hostid +", hostname="+ hostname + ", ioukey=" + hex(ioukey)[2:])
+# create the license using md5sum
+iouPad1 = b'\x4B\x58\x21\x81\x56\x7B\x0D\xF3\x21\x43\x9B\x7E\xAC\x1D\xE6\x8A'
+iouPad2 = b'\x80' + 39*b'\0'
+md5input=iouPad1 + iouPad2 + struct.pack('!L', ioukey) + iouPad1
+iouLicense=hashlib.md5(md5input).hexdigest()[:16]
+
+print("\nAdd the following text to ~/.iourc:")
+print("[license]\n" + hostname + " = " + iouLicense + ";\n")
+with open("iourc.txt", "wt") as out_file:
+   out_file.write("[license]\n" + hostname + " = " + iouLicense + ";\n")
+print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAlready copy to the file iourc.txt\n ")
+
+print("You can disable the phone home feature with something like:")
+print(" echo '127.0.0.127 xml.cisco.com' >> /etc/hosts\n")
+EOFC
+
+sleep 1
 
 clear
 echo "Instalacja licencji IOU"
-# pobranie skryptu do utowrzenia licencji dla IOU, zmiana nazwy pliku i przeniesienie go do konfiguracji gns3
-wget http://www.ipvanquish.com/download/CiscoIOUKeygen3f.py
+
 python3 ./CiscoIOUKeygen3f.py
 mv iourc.txt /opt/gns3/.iourc
-chmod +x /opt/gns3/images/IOU/*.*
 
 
 
