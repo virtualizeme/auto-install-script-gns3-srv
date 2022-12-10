@@ -5,9 +5,9 @@
 ```
 $ wget http://www.ipvanquish.com/download/CiscoIOUKeygen3f.py
 ```
-*  otrzymany plik `iourc.txt` przenosimy do folderu domowego dla uzytkownika `gns3`, w tym przypadku zgodnie z skryptem instalacyjnym `/opt/gns3/` , jednoczenie zmieniając nazwę pliku na `.iourc`
+*  otrzymany plik `iourc.txt` przenosimy do folderu domowego dla uzytkownika `gns3`, w tym przypadku zgodnie z skryptem instalacyjnym `/opt/gns3/` , jednoczenie zmieniając nazwę pliku na `.iourc`. Pamiętaj, że może to być to również użytkownik po instalacji Ubuntu Server i folder np. `/home/[username]`, wszystko możesz ustawić edytując skrypt instalacyjny GNS3 Server
 ```
-mv /opt/gns3/iourc.txt /opt/gns3/.iourc
+mv iourc.txt /opt/gns3/.iourc
 ```
 * na wszelki wypadek wkonajmy polecenie nadajace uprawnienia `executable` dla plików IOU
 ```
