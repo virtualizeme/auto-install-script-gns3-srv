@@ -2,22 +2,27 @@
 
 
 clear
-echo "Update oraz Upgrade Ubuntu"
-
-# dwie ponizsze linie wylaczaja pytanie o restart serwisow przy kazdorazowym apt update i apt install z uwagi na fuul-upgrade nie sa potrzebne
-sed -i "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
-sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
+echo "Zmiana nazwy hostname na 'gns3server'"
+hostnamectl set-hostname gns3server
 sleep 2
 
+clear
+echo "Update oraz Upgrade Ubuntu oraz wylaczenie kernel promtp i sevices restart prompt"
+sleep 2
+# dwie ponizsze linie wylaczaja pytanie o restart serwisow przy kazdorazowym apt update i apt install z uwagi na fuul-upgrade nie sa potrzebne
+sed -i "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
+sleep 1
+sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
+sleep 1
 apt update -y
 sleep 1
 apt full-upgrade -y --auto-remove
 sleep 1
 
-clear
-echo "Dodanie repozytorium GNS3 oraz instalacja GNS3 gui i GNS3 server"
-sleep 2
 
+clear
+echo "Dodanie repozytorium GNS3 oraz instalacja GNS3 server"
+sleep 2
 add-apt-repository ppa:gns3/ppa -y
 sleep 1
 apt update -y
@@ -30,9 +35,6 @@ sleep 1
 clear
 echo "Dodanie wsparcia architektury i386 dla IOU"
 sleep 2
-# zmiana hostname serwera ktora zostanie przypisana do licencji IOU
-hostnamectl set-hostname gns3server
-sleep 1
 dpkg --add-architecture i386
 sleep 1
 apt update -y
@@ -40,94 +42,101 @@ sleep 1
 apt install gns3-iou -y
 sleep 1
 
+clear
+echo "Instalacja Docker-CE"
+sleep 2
+
+apt install apt-transport-https ca-certificates curl software-properties-common -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt update -y
+apt-cache policy docker-ce
+apt install docker-ce -y
+
+
+clear
+echo "Dodanie uzytkownika biezacego uzytkownika do grup"
+sleep 2
+
+usermod -aG ubridge ubuntu
+usermod -aG libvirt ubuntu
+usermod -aG kvm ubuntu
+# usermod -aG wireshark $USER ==> wpis nie aktywny z uwagi na tryb NOINTERACTIVE instalacji gns3server
+usermod -aG docker ubuntu
+sleep 3
+
 #################### ta czesc odpowiada za konfiguracje serwera i uzytkownika gns3 #########################
+
+
+
 
 clear
 echo "Konfiguracja serwera i uzytkownika gns3"
 
-# utworzenie uzytkownika gns3 i przypisanie mu folderu domowego 
-useradd -d /opt/gns3/ -m gns3
 
+echo "wylaczenie servera gns3 do wprowadzenia wlasnej konfiguracji"
+systemctl stop gns3server.service
+sleep 2
+
+echo "stworzenie folderow wskazanych w pliku konfiguracyjnym i nadanie uprawnien"
+sessionPath=$(pwd)
+mkdir -p $sessionPath/gns3
+chown -R ubuntu:ubuntu /$sessionPath/gns3
+chmod -R 700 /$sessionPath/gns3
+
+echo "stworzenie folderu gns3 w /etc i nadanie uprawnien"
 # konfiguracja serwera gns3
 mkdir -p /etc/gns3
+chown -R ubuntu:ubuntu /etc/gns3
+chmod -R 700 /etc/gns3
+
+echo "stworzenie w /etc/gns3/... pliku konfiguracyjnego"
 cat <<EOFC > /etc/gns3/gns3_server.conf
 [Server]
-host = $(hostname  -I | cut -f1 -d' ')
+host = 0.0.0.0
 port = 3080 
-images_path = /opt/gns3/images
-projects_path = /opt/gns3/projects
-appliances_path = /opt/gns3/appliances
-configs_path = /opt/gns3/configs
+images_path = $sessionPath/gns3/images
+projects_path = $sessionPath/gns3/projects
+appliances_path = $sessionPath/gns3/appliances
+configs_path = $sessionPath/gns3/configs
 report_errors = True
+console_start_port_range = 5000
+console_end_port_range = 5800
+vnc_console_start_port_range = 5900
+vnc_console_end_port_range = 10000
+udp_start_port_range = 20000
+udp_end_port_range = 30000
+auth = True
+user = admin
+password = admin
+enable_builtin_templates = True
+[Dynamips]
+allocate_aux_console_ports = False
+mmap_support = True
+dynamips_path = $sessionPath/gns3/images/IOS
+sparse_memory_support = True
+ghost_ios_support = True
+[IOU]
+iouyap_path = $sessionPath/gns3/images/IOU
+iourc_path = $sessionPath/gns3/.iourc
+license_check = True
 [Qemu]
+enable_kvm = True
+require_kvm = True
 enable_hardware_acceleration = True
 require_hardware_acceleration = True
 EOFC
 
-chown -R gns3:gns3 /etc/gns3
-chmod -R 700 /etc/gns3
+echo "dodanie do startu systemu docker i gns3server systemctl enable"
+systemctl enable gns3server.service
+systemctl enable docker
+sleep 1
 
-cat <<EOFI > /etc/init/gns3.conf
-description "GNS3 server"
-author      "GNS3 Team"
-start on filesystem or runlevel [2345]
-stop on runlevel [016]
-respawn
-console log
-script
-    exec start-stop-daemon --start --make-pidfile --pidfile /var/run/gns3.pid --chuid gns3 --exec "/usr/bin/gns3server"
-end script
-pre-start script
-    echo "" > /var/log/upstart/gns3.log
-    echo "[`date`] GNS3 Starting"
-end script
-pre-stop script
-    echo "[`date`] GNS3 Stopping"
-end script
-EOFI
-
-chown root:root /etc/init/gns3.conf
-chmod 644 /etc/init/gns3.conf
-
-sudo systemctl stop gns3server.service
-sleep 1 
-sudo systemctl start gns3server.service
+echo "ponowne uruchomienie serwera gns z nowymi ustawieniami"
+systemctl start gns3server.service
 sleep 2
 
-# instalacja serwisu systemd
 
-cat <<EOFI > /lib/systemd/system/gns3.service
-[Unit]
-Description=GNS3 server
-After=network-online.target
-Wants=network-online.target
-Conflicts=shutdown.target
-[Service]
-User=gns3
-Group=gns3
-PermissionsStartOnly=true
-EnvironmentFile=/etc/environment
-ExecStartPre=/bin/mkdir -p /var/log/gns3 /var/run/gns3
-ExecStartPre=/bin/chown -R gns3:gns3 /var/log/gns3 /var/run/gns3
-ExecStart=/usr/bin/gns3server --log /var/log/gns3/gns3.log
-ExecReload=/bin/kill -s HUP $MAINPID
-Restart=on-failure
-RestartSec=5
-LimitNOFILE=16384
-[Install]
-WantedBy=multi-user.target
-EOFI
-
-
-chmod 755 /lib/systemd/system/gns3.service
-chown root:root /lib/systemd/system/gns3.service
-
-sudo systemctl enable gns3server.service
-
-sudo systemctl start gns3server.service
-sleep 2
-
-clear
 echo "Tworzenie pliku CiscoIOUKeygen.py"
 cat <<EOFC > CiscoIOUKeygen.py
 #! /usr/bin/python3
@@ -149,64 +158,28 @@ iouPad1 = b'\x4B\x58\x21\x81\x56\x7B\x0D\xF3\x21\x43\x9B\x7E\xAC\x1D\xE6\x8A'
 iouPad2 = b'\x80' + 39*b'\0'
 md5input=iouPad1 + iouPad2 + struct.pack('!L', ioukey) + iouPad1
 iouLicense=hashlib.md5(md5input).hexdigest()[:16]
-
 print("\nAdd the following text to ~/.iourc:")
 print("[license]\n" + hostname + " = " + iouLicense + ";\n")
 with open("iourc.txt", "wt") as out_file:
    out_file.write("[license]\n" + hostname + " = " + iouLicense + ";\n")
 print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAlready copy to the file iourc.txt\n ")
-
 print("You can disable the phone home feature with something like:")
 print(" echo '127.0.0.127 xml.cisco.com' >> /etc/hosts\n")
 EOFC
 
 sleep 1
 
-clear
+
 echo "Instalacja licencji IOU"
 
-python3 ./CiscoIOUKeygen3f.py
-mv iourc.txt /opt/gns3/.iourc
+chmod +x CiscoIOUKeygen.py
+python3 ./CiscoIOUKeygen.py
+
+mv iourc.txt $sessionPath/gns3/.iourc
+cp /$sessionPath/gns3/.iourc /$sessionPath/gns3/images/
 
 
 
-clear
-echo "Instalacja Docker-CE"
-sleep 2
-
-apt install apt-transport-https ca-certificates curl software-properties-common -y
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-apt update -y
-apt-cache policy docker-ce
-apt install docker-ce -y
-
-
-clear
-echo "Dodanie uzytkownika gns3 do grup  ubridge,libvirt,kvm,docker i nadanie uprawnien"
-sleep 2
-
-usermod -aG ubridge gns3
-usermod -aG libvirt gns3
-usermod -aG kvm gns3
-# usermod -aG wireshark $USER ==> wpis nie aktywny z uwagi na tryb NOINTERACTIVE instalacji gns3server
-usermod -aG docker gns3
-sleep 3
-
-clear
-echo "Uruchomienie serwisow GNS3 i Docker oraz dodanie do uruchamiania z startem systemu"
-sudo systemctl restart gns3server.service
-sleep 2
-sudo systemctl restart docker
-sleep 2
-sudo systemctl enable docker
-sleep 2
-sudo systemctl enable gns3server.service
-sleep 2
-
-clear
-
-clear
 echo "Status serwisow GN3 i Docker"
 echo "#######################################"
 echo "GNS3: $(sudo systemctl status gns3server.service | grep Active:)"
@@ -214,7 +187,5 @@ echo "Docker-CE: $(sudo systemctl status docker | grep Active:)"
 echo "#######################################"
 echo "GNS3 web portal: http://$(hostname  -I | cut -f1 -d' '):3080"
 echo "#######################################"
-echo "Utworz haslo dla uzytkownika gns3:"
-passwd gns3
 read -p "Instalacja zakonczona, wcisniej ENTER..nastapi REBOOT systemu"
 shutdown -r now
