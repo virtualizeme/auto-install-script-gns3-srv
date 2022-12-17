@@ -58,11 +58,12 @@ clear
 echo "Dodanie uzytkownika biezacego uzytkownika do grup"
 sleep 2
 
-usermod -aG ubridge ubuntu
-usermod -aG libvirt ubuntu
-usermod -aG kvm ubuntu
+sessionUser=$(logname)
+usermod -aG ubridge $sessionUser
+usermod -aG libvirt $sessionUser
+usermod -aG kvm $sessionUser
 # usermod -aG wireshark $USER ==> wpis nie aktywny z uwagi na tryb NOINTERACTIVE instalacji gns3server
-usermod -aG docker ubuntu
+usermod -aG docker $sessionUser
 sleep 3
 
 #################### ta czesc odpowiada za konfiguracje serwera i uzytkownika gns3 #########################
@@ -81,13 +82,13 @@ sleep 2
 echo "stworzenie folderow wskazanych w pliku konfiguracyjnym i nadanie uprawnien"
 sessionPath=$(pwd)
 mkdir -p $sessionPath/gns3
-chown -R ubuntu:ubuntu /$sessionPath/gns3
+chown -R $sessionUser:$sessionUser /$sessionPath/gns3
 chmod -R 700 /$sessionPath/gns3
 
 echo "stworzenie folderu gns3 w /etc i nadanie uprawnien"
 # konfiguracja serwera gns3
 mkdir -p /etc/gns3
-chown -R ubuntu:ubuntu /etc/gns3
+chown -R $sessionUser:$sessionUser /etc/gns3
 chmod -R 700 /etc/gns3
 
 echo "stworzenie w /etc/gns3/... pliku konfiguracyjnego"
@@ -106,9 +107,6 @@ vnc_console_start_port_range = 5900
 vnc_console_end_port_range = 10000
 udp_start_port_range = 20000
 udp_end_port_range = 30000
-auth = True
-user = admin
-password = admin
 enable_builtin_templates = True
 [Dynamips]
 allocate_aux_console_ports = False
