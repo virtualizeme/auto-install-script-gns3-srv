@@ -137,6 +137,8 @@ Podczas instalacji wybieramy `display manager` a tam  lżejsza wersje - `lightdm
 $ sudo apt install virt-manager
 ```
 
-## Support
 
-Potrzebujesz pomocy - wsparcia w tej tematyce, email virtualize.me.polska@.gmail.com Z czasem dojdzie `Discord` lub `Slack` :)
+
+🔗 **Find me elsewhere**
+- [GitHub](https://github.com/virtualizeme)
+- [YouTube](https://www.youtube.com/virtualizeme)
