@@ -24,3 +24,8 @@ DEVICE="eth0" <=== zmien tutaj z ens na eth0
 ONBOOT="yes"
 ```
 3. Oczywiście możemy równiez po wrzuceniu wirtualnej maszyny w projekt dokonac instalacji SOnion od poczatku na czystym dysku `*.qcow2`, gdzie kreator instalacji wykryje aktualne interfejsy jakie otrzymal od KVM i QEMU. Jednak zalecam skorzystac z templatki zeby zaoszczedzic na czasie, ktora w przypadku SOnion jest bardzo czasochlonna.
+
+
+🔗 **Find me elsewhere**
+- [GitHub](https://github.com/virtualizeme)
+- [YouTube](https://www.youtube.com/virtualizeme)
