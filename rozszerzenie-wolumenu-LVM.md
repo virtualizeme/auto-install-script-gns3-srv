@@ -113,3 +113,8 @@ $ sudo vgdisplay
   tmpfs                              6.3G  4.0K  6.3G   1% /run/user/0
   tmpfs                              6.3G  4.0K  6.3G   1% /run/user/1000
   ```
+
+
+🔗 **Find me elsewhere**
+- [GitHub](https://github.com/virtualizeme)
+- [YouTube](https://www.youtube.com/virtualizeme)
