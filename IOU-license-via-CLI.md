@@ -13,3 +13,6 @@ mv iourc.txt /opt/gns3/.iourc
 ```
 chmod +x /opt/gns3/images/IOU/*.*
 ```
+🔗 **Find me elsewhere**
+- [GitHub](https://github.com/virtualizeme)
+- [YouTube](https://www.youtube.com/virtualizeme)
